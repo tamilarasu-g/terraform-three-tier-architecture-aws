@@ -62,3 +62,33 @@ variable "ec2_sg_name" {
   type = string
   description = "Security group name for EC2"
 }
+
+variable "lb_target_group_name" {
+  type = string
+  description = "Name for the LB target group"
+}
+
+variable "ami-id" {
+  type = string
+  description = "AMI ID for EC2"
+}
+
+variable "instance-type" {
+  type = string
+  description = "EC2 instance type"
+}
+
+variable "key-name" {
+  type = string
+  description = "SSH Key name"
+}
+
+variable "instance_1_name" {
+  type = string
+  description = "Name for instance 1"
+}
+
+variable "instance_2_name" {
+  type = string
+  description = "Name for instance 2"
+}
