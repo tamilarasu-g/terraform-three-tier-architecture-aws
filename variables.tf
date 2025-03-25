@@ -47,3 +47,18 @@ variable "private_subnet_2_cidr_block" {
   type = string
   description = "CIDR Block for Private Subnet 2"
 }
+
+variable "db_sg_name" {
+  type = string
+  description = "Security group name for DB"
+}
+
+variable "lb_sg_name" {
+  type = string
+  description = "Security group name for LB"
+}
+
+variable "ec2_sg_name" {
+  type = string
+  description = "Security group name for EC2"
+}
