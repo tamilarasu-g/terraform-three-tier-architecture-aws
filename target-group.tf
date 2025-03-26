@@ -8,11 +8,11 @@ resource "aws_lb_target_group" "tta_lb_target_group" {
 resource "aws_lb_target_group_attachment" "tg-attachment-1" {
   target_group_arn = aws_lb_target_group.tta_lb_target_group.arn
   target_id = aws_instance.instance-1.id
-  port = 80
+  port = 5000
 }
 
 resource "aws_lb_target_group_attachment" "tg-attachment-2" {
   target_group_arn = aws_lb_target_group.tta_lb_target_group.arn
   target_id = aws_instance.instance-2.id
-  port = 80
+  port = 5000
 }

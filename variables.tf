@@ -48,6 +48,16 @@ variable "private_subnet_2_cidr_block" {
   description = "CIDR Block for Private Subnet 2"
 }
 
+variable "private_subnet_3_cidr_block" {
+  type = string
+  description = "CIDR Block for Private Subnet 2"
+}
+
+variable "private_subnet_4_cidr_block" {
+  type = string
+  description = "CIDR Block for Private Subnet 2"
+}
+
 variable "db_sg_name" {
   type = string
   description = "Security group name for DB"
@@ -58,12 +68,22 @@ variable "lb_sg_name" {
   description = "Security group name for LB"
 }
 
-variable "ec2_sg_name" {
+variable "ec2_public_sg_name" {
+  type = string
+  description = "Security group name for EC2"
+}
+
+variable "ec2_private_sg_name" {
   type = string
   description = "Security group name for EC2"
 }
 
 variable "lb_target_group_name" {
+  type = string
+  description = "Name for the LB target group"
+}
+
+variable "lb_private_target_group_name" {
   type = string
   description = "Name for the LB target group"
 }
@@ -91,4 +111,24 @@ variable "instance_1_name" {
 variable "instance_2_name" {
   type = string
   description = "Name for instance 2"
+}
+
+variable "instance_3_name" {
+  type = string
+  description = "Name for instance 3"
+}
+
+variable "instance_4_name" {
+  type = string
+  description = "Name for instance 4"
+}
+
+variable "db_username" {
+  type = string
+  description = "Username for the rds database"
+}
+
+variable "db_password" {
+  type = string
+  description = "Password for the rds database"
 }
