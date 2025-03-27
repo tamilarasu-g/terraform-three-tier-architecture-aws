@@ -3,23 +3,13 @@ resource "aws_security_group" "ec2_private_sg" {
   description = "Allow tls for inbound traffic"
   vpc_id = aws_vpc.tta_vpc.id
 
-
   ingress {
-    description      = "SSH from VPC"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
-    security_groups = [aws_security_group.ec2_public_sg.id]
-  }
-
-  ingress {
-    description      = "HTTP from VPC"
+    description      = "HTTP from Public EC2"
     from_port        = 3000
     to_port          = 3000
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
-    security_groups = [aws_security_group.ec2_public_sg.id]
+    security_groups = [aws_security_group.tta_internal_lb.id]
   }
 
   egress {
@@ -28,15 +18,6 @@ resource "aws_security_group" "ec2_private_sg" {
     protocol         = "-1"
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
-  }
-
-  egress {
-    description      = "Rule to allow connections to database from any instances this security group is attached to"
-    from_port        = 3306
-    to_port          = 3306
-    protocol         = "tcp"
-    security_groups  = [aws_security_group.db-sg.id]
-    self             = false
   }
 
   tags = {

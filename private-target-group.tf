@@ -1,7 +1,7 @@
 resource "aws_lb_target_group" "tta_lb_private_target_group" {
   name = var.lb_private_target_group_name
-  port = 3000
-  protocol = "TCP"
+  port = 80
+  protocol = "HTTP"
   vpc_id = aws_vpc.tta_vpc.id
 }
 

@@ -7,6 +7,7 @@ resource "aws_db_instance" "tta_db" {
   skip_final_snapshot = true
   storage_type = "gp2"
   identifier = "tta-db"
+  db_name = var.db_name
 
   vpc_security_group_ids = [aws_security_group.db-sg.id]
   db_subnet_group_name = aws_db_subnet_group.db_subnet_group.name

@@ -15,8 +15,8 @@ resource "aws_security_group" "ec2_public_sg" {
 
   ingress {
     description      = "HTTP from VPC"
-    from_port        = 5000
-    to_port          = 5000
+    from_port        = 4173
+    to_port          = 4173
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
     security_groups = [aws_security_group.lb_sg.id]

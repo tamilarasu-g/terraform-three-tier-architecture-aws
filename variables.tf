@@ -68,6 +68,11 @@ variable "lb_sg_name" {
   description = "Security group name for LB"
 }
 
+variable "private_lb_sg_name" {
+  type = string
+  description = "Security group name for LB"
+}
+
 variable "ec2_public_sg_name" {
   type = string
   description = "Security group name for EC2"
@@ -131,4 +136,9 @@ variable "db_username" {
 variable "db_password" {
   type = string
   description = "Password for the rds database"
+}
+
+variable "db_name" {
+  type = string
+  description = "Name of the DB to be created"
 }
