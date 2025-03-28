@@ -9,7 +9,7 @@ resource "aws_security_group" "ec2_private_sg" {
     to_port          = 3000
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
-    security_groups = [aws_security_group.tta_internal_lb.id]
+    security_groups = [aws_security_group.private_lb_sg.id]
   }
 
   egress {
