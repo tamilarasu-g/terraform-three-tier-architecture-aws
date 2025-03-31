@@ -1,46 +1,78 @@
 #!/bin/bash
 
 sudo apt update
+
+
+# sudo -u ubuntu bash -c '
+
+# ## Node.js Download
+# # Download and install nvm:
+# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
+
+# # Load NVM (ensure we use absolute path)
+# export NVM_DIR="/home/ubuntu/.nvm"
+# source "$NVM_DIR/nvm.sh"
+
+# # Install Node.js
+# nvm install 22
+# nvm use 22
+
+# # Verify installation
+# node -v
+# npm -v
+
+# ## Clone the project
+# cd /home/ubuntu
+# git clone https://github.com/tamilarasu-g/mysql-node-react
+# cd mysql-node-react/server
+# npm ci
+# npm install -g pm2
+
+# # Create .env file
+# cat > .env << EOF
+# PORT=3000
+# DB_HOST="${db_host}"
+# DB_USER="${db_username}"
+# DB_PASSWORD="${db_password}"
+# DB_DATABASE="${db_name}"
+# DB_WAITFORCONNECTIONS=true
+# DB_CONNECTIONLIMIT=10
+# DB_QUEUELIMIT=0
+# DB_TABLENAME="${db_name}"
+# EOF
+
+# # Start the app using PM2
+# pm2 start npm --name my-app -- run start
+# pm2 save
+# '
+
 sudo -u ubuntu bash -c '
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-## Node.js Download
-# Download and install nvm:
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
-
-# Load NVM (ensure we use absolute path)
-export NVM_DIR="/home/ubuntu/.nvm"
-source "$NVM_DIR/nvm.sh"
-
-# Install Node.js
-nvm install 22
-nvm use 22
-
-# Verify installation
-node -v
-npm -v
-
-## Clone the project
-cd /home/ubuntu
-git clone https://github.com/tamilarasu-g/mysql-node-react
-cd mysql-node-react/server
-npm ci
-npm install -g pm2
-
-# Create .env file
-cat > .env << EOF
-PORT=3000
-DB_HOST="${db_host}"
-DB_USER="${db_username}"
-DB_PASSWORD="${db_password}"
-DB_DATABASE="${db_name}"
-DB_WAITFORCONNECTIONS=true
-DB_CONNECTIONLIMIT=10
-DB_QUEUELIMIT=0
-DB_TABLENAME="${db_name}"
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo usermod -aG docker ubuntu
+mkdir docker
+cd docker
+cat > compose.yml << EOF
+services:
+  flaskapp:
+    container_name: flaskapp
+    image: tamilarasug/flaskapp:1
+    ports:
+      - 3000:4000
+    environment:
+      - DATABASE_URL=postgresql://${var.db_username}:${var.db_password}@${aws_db_instance.tta_db.address}:5432/${var.db_name}
 EOF
-
-# Start the app using PM2
-pm2 start npm --name my-app -- run start
-pm2 save
+sudo docker compose up -d
 '
-

@@ -1,38 +1,72 @@
 #!/bin/bash
 
 sudo apt update
+# sudo -u ubuntu bash -c '
+
+# ## Node.js Download
+# # Download and install nvm:
+# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
+
+# # Load NVM properly
+# export NVM_DIR="/home/ubuntu/.nvm"
+# source "$NVM_DIR/nvm.sh"
+
+# # Install Node.js
+# nvm install 22
+# nvm use 22
+
+# # Verify installation
+# node -v
+# npm -v
+
+# ## Clone the project
+# cd /home/ubuntu
+# git clone https://github.com/tamilarasu-g/mysql-node-react
+# cd mysql-node-react/frontend
+# npm ci
+# npm install -g pm2
+
+# # Create .env file
+# echo "VITE_APP_BACKEND_URL=\"http://${backend_lb_url}\"" > .env
+
+# # Build React app
+# npm run build
+
+# # Start the app using PM2
+# pm2 start npm --name my-app -- run preview
+# pm2 save
+# '
+
 sudo -u ubuntu bash -c '
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-## Node.js Download
-# Download and install nvm:
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo usermod -aG docker ubuntu
+mkdir docker
+cd docker
+cat > compose.yml << EOF
+services:      
+  #nextjs service
+  nextapp:
+    container_name: nextapp
+    image: tamilarasug/nextapp:1
+    ports:                   
+      - 4173:3000                
+    environment:           
+    - NEXT_PUBLIC_API_URL=http://${aws_lb.tta_lb.dns_name}
+EOF
+sudo docker compose up -d
 
-# Load NVM properly
-export NVM_DIR="/home/ubuntu/.nvm"
-source "$NVM_DIR/nvm.sh"
 
-# Install Node.js
-nvm install 22
-nvm use 22
-
-# Verify installation
-node -v
-npm -v
-
-## Clone the project
-cd /home/ubuntu
-git clone https://github.com/tamilarasu-g/mysql-node-react
-cd mysql-node-react/frontend
-npm ci
-npm install -g pm2
-
-# Create .env file
-echo "VITE_APP_BACKEND_URL=\"http://${backend_lb_url}\"" > .env
-
-# Build React app
-npm run build
-
-# Start the app using PM2
-pm2 start npm --name my-app -- run preview
-pm2 save
 '
