@@ -36,6 +36,7 @@ resource "aws_instance" "instance-3" {
     subnet_id = aws_subnet.private_subnet_1.id
     security_groups = [aws_security_group.ec2_private_sg.id]
     key_name = var.key-name
+    iam_instance_profile = "ec2-ssm"
     # user_data = templatefile("backend.sh.tftpl", { db_host=aws_db_instance.tta_db.address, db_username=var.db_username, db_password = var.db_password, db_name = "users" })
 
     tags = merge(local.common_tags,{
@@ -49,6 +50,7 @@ resource "aws_instance" "instance-4" {
     subnet_id = aws_subnet.private_subnet_2.id
     security_groups = [aws_security_group.ec2_private_sg.id]
     key_name = var.key-name
+    iam_instance_profile = "ec2-ssm"
     # user_data = templatefile("backend.sh.tftpl", { db_host=aws_db_instance.tta_db.address, db_username=var.db_username, db_password = var.db_password, db_name = "users" })
 
     tags = merge(local.common_tags,{
