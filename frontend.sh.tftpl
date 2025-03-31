@@ -60,11 +60,11 @@ services:
   #nextjs service
   nextapp:
     container_name: nextapp
-    image: tamilarasug/nextapp:1
+    image: tamilarasug/next-app:2
     ports:                   
       - 4173:3000                
     environment:           
-    - NEXT_PUBLIC_API_URL=http://${aws_lb.tta_lb.dns_name}
+    - NEXT_PUBLIC_API_URL=http://flaskapi.epicbugs.in
 EOF
 sudo docker compose up -d
 
