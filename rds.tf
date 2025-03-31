@@ -1,6 +1,6 @@
 resource "aws_db_instance" "tta_db" {
   allocated_storage = 10
-  engine = "mysql"
+  engine = "postgres"
   instance_class = "db.t3.micro"
   username = var.db_username
   password = var.db_password
