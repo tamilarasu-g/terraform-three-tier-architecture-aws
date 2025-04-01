@@ -21,6 +21,6 @@ resource "aws_security_group" "ec2_private_sg" {
   }
 
   tags = {
-    Name = "allow_tls"
+    Name = "allow_http"
   }
 }

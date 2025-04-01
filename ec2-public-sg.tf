@@ -10,7 +10,7 @@ resource "aws_security_group" "ec2_public_sg" {
     to_port          = 22
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
-    security_groups = [aws_security_group.lb_sg.id]
+    # security_groups = [aws_security_group.lb_sg.id]
   }
 
   ingress {
@@ -18,7 +18,7 @@ resource "aws_security_group" "ec2_public_sg" {
     from_port        = 4173
     to_port          = 4173
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    # cidr_blocks      = ["0.0.0.0/0"]
     security_groups = [aws_security_group.lb_sg.id]
   }
 
@@ -31,6 +31,6 @@ resource "aws_security_group" "ec2_public_sg" {
   }
   
   tags = {
-    Name = "allow_tls"
+    Name = "allow_http"
   }
 }
